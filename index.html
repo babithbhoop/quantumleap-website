@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quantumleap Insights LLC | AI & Customer Experience Consulting</title>
+  <meta name="description" content="Enterprise AI strategy, FSI AI ROI advisory, and customer experience transformation — backed by 25+ years of Fortune 500 and Microsoft leadership." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue: #2563EB;
+      --blue-dark: #1d4ed8;
+      --blue-light: #3b82f6;
+      --blue-glow: rgba(37, 99, 235, 0.15);
+      --gold: #f59e0b;
+      --gold-dim: rgba(245, 158, 11, 0.12);
+      --bg: #0a0a0f;
+      --bg-card: #111118;
+      --bg-card2: #16161f;
+      --border: rgba(255,255,255,0.07);
+      --border-blue: rgba(37,99,235,0.3);
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --green: #22c55e;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ───────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(10,10,15,0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto;
+      padding: 0 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px;
+    }
+
+    .nav-logo {
+      font-size: 17px; font-weight: 700;
+      color: var(--text); text-decoration: none;
+      letter-spacing: -0.3px;
+    }
+
+    .nav-logo span { color: var(--blue); }
+
+    .nav-links {
+      display: flex; align-items: center; gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-muted); text-decoration: none;
+      font-size: 14px; font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-cta {
+      background: var(--blue); color: #fff !important;
+      padding: 9px 20px; font-weight: 600 !important;
+      font-size: 13px !important;
+      transition: background 0.2s !important;
+    }
+
+    .nav-cta:hover { background: var(--blue-dark) !important; color: #fff !important; }
+
+    .nav-toggle {
+      display: none; background: none; border: none;
+      color: var(--text); cursor: pointer; padding: 4px;
+    }
+
+    /* ── HERO ──────────────────────────────────────── */
+    .hero {
+      padding: 140px 24px 100px;
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 64px; align-items: center;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--blue-glow); border: 1px solid var(--border-blue);
+      padding: 6px 14px; margin-bottom: 24px;
+      font-size: 12px; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--blue-light);
+    }
+
+    .hero-eyebrow::before {
+      content: ''; width: 6px; height: 6px; border-radius: 50%;
+      background: var(--blue-light);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    h1 {
+      font-size: clamp(36px, 4.5vw, 58px);
+      font-weight: 700; line-height: 1.1;
+      letter-spacing: -1.5px; margin-bottom: 20px;
+      color: var(--text);
+    }
+
+    h1 em { color: var(--blue); font-style: normal; }
+
+    .hero-sub {
+      font-size: 18px; color: var(--text-muted);
+      line-height: 1.7; margin-bottom: 36px;
+      font-weight: 300;
+    }
+
+    .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+
+    .btn-primary {
+      background: var(--blue); color: #fff;
+      padding: 14px 28px; font-weight: 600; font-size: 15px;
+      text-decoration: none; border: none; cursor: pointer;
+      transition: background 0.2s;
+      display: inline-block;
+    }
+    .btn-primary:hover { background: var(--blue-dark); }
+
+    .btn-ghost {
+      background: transparent; color: var(--text);
+      padding: 13px 28px; font-weight: 500; font-size: 15px;
+      text-decoration: none; border: 1px solid var(--border);
+      display: inline-block; transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-ghost:hover { border-color: rgba(255,255,255,0.2); color: #fff; }
+
+    .hero-stats {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 24px; margin-top: 48px;
+      padding-top: 48px; border-top: 1px solid var(--border);
+    }
+
+    .stat-val {
+      font-size: 28px; font-weight: 700; color: var(--text);
+      letter-spacing: -0.5px; margin-bottom: 4px;
+    }
+
+    .stat-label { font-size: 12px; color: var(--text-dim); font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; }
+
+    /* HERO RIGHT — new FSI feature card */
+    .hero-feature-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-blue);
+      padding: 32px;
+      position: relative; overflow: hidden;
+    }
+
+    .hero-feature-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--blue), var(--blue-light));
+    }
+
+    .feature-card-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--gold-dim); border: 1px solid rgba(245,158,11,0.3);
+      padding: 4px 12px; margin-bottom: 20px;
+      font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--gold);
+    }
+
+    .feature-card-title {
+      font-size: 22px; font-weight: 700;
+      letter-spacing: -0.4px; margin-bottom: 12px; line-height: 1.25;
+    }
+
+    .feature-card-desc {
+      font-size: 14px; color: var(--text-muted);
+      line-height: 1.65; margin-bottom: 24px;
+    }
+
+    .feature-card-metrics {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 12px; margin-bottom: 24px;
+    }
+
+    .fcm-item {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      padding: 14px;
+    }
+
+    .fcm-val {
+      font-size: 20px; font-weight: 700; color: var(--blue-light);
+      margin-bottom: 3px;
+    }
+
+    .fcm-label { font-size: 10px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.06em; }
+
+    .feature-card-cta {
+      display: block; width: 100%;
+      background: var(--blue); color: #fff;
+      padding: 13px 20px; text-align: center;
+      font-weight: 600; font-size: 14px; text-decoration: none;
+      transition: background 0.2s;
+    }
+    .feature-card-cta:hover { background: var(--blue-dark); }
+
+    /* ── SECTION SHARED ────────────────────────────── */
+    section { padding: 100px 24px; }
+
+    .section-inner { max-width: 1200px; margin: 0 auto; }
+
+    .section-label {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--blue-light);
+      margin-bottom: 16px;
+    }
+
+    h2 {
+      font-size: clamp(28px, 3.5vw, 44px);
+      font-weight: 700; letter-spacing: -1px;
+      line-height: 1.15; margin-bottom: 16px;
+    }
+
+    .section-sub {
+      font-size: 17px; color: var(--text-muted);
+      max-width: 600px; line-height: 1.7; margin-bottom: 56px;
+      font-weight: 300;
+    }
+
+    /* ── FSI SPOTLIGHT SECTION ─────────────────────── */
+    .fsi-spotlight {
+      background: var(--bg-card);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .fsi-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 64px; align-items: start;
+    }
+
+    .fsi-left .section-label { margin-bottom: 16px; }
+
+    .fsi-left h2 { margin-bottom: 20px; }
+    .fsi-left h2 span { color: var(--blue); }
+
+    .fsi-body {
+      font-size: 16px; color: var(--text-muted);
+      line-height: 1.75; margin-bottom: 32px;
+    }
+
+    .fsi-dimensions {
+      display: flex; flex-direction: column; gap: 10px;
+      margin-bottom: 36px;
+    }
+
+    .fsi-dim {
+      display: flex; align-items: flex-start; gap: 14px;
+      padding: 14px 16px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border);
+      transition: border-color 0.2s;
+    }
+
+    .fsi-dim:hover { border-color: var(--border-blue); }
+
+    .fsi-dim-num {
+      font-size: 11px; font-weight: 700;
+      color: var(--blue); font-variant-numeric: tabular-nums;
+      min-width: 20px; padding-top: 1px;
+    }
+
+    .fsi-dim-content {}
+    .fsi-dim-title { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
+    .fsi-dim-desc { font-size: 12px; color: var(--text-dim); line-height: 1.5; }
+
+    .fsi-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    /* RIGHT: assessment preview card */
+    .fsi-preview {
+      background: var(--bg);
+      border: 1px solid var(--border-blue);
+      overflow: hidden;
+      position: sticky; top: 84px;
+    }
+
+    .fsi-preview-header {
+      background: linear-gradient(135deg, rgba(37,99,235,0.15), rgba(37,99,235,0.05));
+      border-bottom: 1px solid var(--border-blue);
+      padding: 20px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+
+    .fsi-preview-title { font-size: 13px; font-weight: 600; color: var(--text); }
+    .fsi-preview-sub { font-size: 11px; color: var(--text-dim); margin-top: 2px; }
+
+    .live-badge {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 10px; font-weight: 600; color: var(--green);
+      text-transform: uppercase; letter-spacing: 0.08em;
+    }
+
+    .live-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--green); animation: pulse 2s infinite;
+    }
+
+    .fsi-preview-body { padding: 24px; }
+
+    .preview-metric-row {
+      display: grid; grid-template-columns: repeat(3,1fr); gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .pm-card {
+      background: var(--bg-card2); border: 1px solid var(--border);
+      padding: 14px 12px; text-align: center;
+    }
+
+    .pm-val { font-size: 18px; font-weight: 700; color: var(--blue-light); margin-bottom: 3px; }
+    .pm-label { font-size: 9px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-dim); }
+
+    .preview-bar-section { margin-bottom: 20px; }
+
+    .pb-label {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 6px; font-size: 11px; color: var(--text-muted);
+    }
+
+    .pb-track {
+      height: 4px; background: rgba(255,255,255,0.05);
+      overflow: hidden;
+    }
+
+    .pb-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--blue), var(--blue-light));
+      animation: barFill 1.5s ease forwards;
+      width: 0;
+    }
+
+    @keyframes barFill { to { width: var(--w); } }
+
+    .preview-disclaimer {
+      font-size: 10px; color: var(--text-dim); line-height: 1.5;
+      padding-top: 16px; border-top: 1px solid var(--border);
+      margin-bottom: 16px;
+    }
+
+    .preview-cta {
+      display: block; width: 100%; padding: 13px;
+      background: var(--blue); color: #fff;
+      text-align: center; font-weight: 600; font-size: 14px;
+      text-decoration: none; transition: background 0.2s;
+    }
+    .preview-cta:hover { background: var(--blue-dark); }
+
+    /* ── ABOUT ─────────────────────────────────────── */
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 64px; align-items: start;
+    }
+
+    .about-highlight {
+      background: var(--blue-glow); border-left: 3px solid var(--blue);
+      padding: 20px 24px; margin-bottom: 32px;
+      font-size: 16px; font-style: italic; color: var(--text-muted); line-height: 1.6;
+    }
+
+    .about-body { font-size: 16px; color: var(--text-muted); line-height: 1.8; }
+    .about-body p + p { margin-top: 16px; }
+
+    .about-right { display: flex; flex-direction: column; gap: 16px; }
+
+    .expertise-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      padding: 22px 24px;
+      transition: border-color 0.2s;
+    }
+
+    .expertise-card:hover { border-color: var(--border-blue); }
+
+    .ec-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+    .ec-body { font-size: 13px; color: var(--text-dim); line-height: 1.6; }
+
+    /* ── SERVICES ──────────────────────────────────── */
+    .services-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1px; background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .service-card {
+      background: var(--bg-card); padding: 32px 28px;
+      transition: background 0.2s;
+      position: relative;
+    }
+
+    .service-card:hover { background: var(--bg-card2); }
+
+    .service-card.featured {
+      background: linear-gradient(135deg, rgba(37,99,235,0.12), rgba(37,99,235,0.04));
+      border: 1px solid var(--border-blue);
+      margin: -1px;
+      z-index: 1;
+    }
+
+    .service-card.featured::before {
+      content: 'NEW · FSI SPECIALTY';
+      position: absolute; top: 0; right: 0;
+      background: var(--blue); color: #fff;
+      font-size: 9px; font-weight: 700; letter-spacing: 0.1em;
+      padding: 4px 10px;
+    }
+
+    .service-icon {
+      width: 36px; height: 36px; background: var(--blue-glow);
+      border: 1px solid var(--border-blue);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 18px; font-size: 16px;
+    }
+
+    .service-title {
+      font-size: 16px; font-weight: 700;
+      color: var(--text); margin-bottom: 10px;
+      letter-spacing: -0.2px;
+    }
+
+    .service-body {
+      font-size: 13px; color: var(--text-dim); line-height: 1.65;
+    }
+
+    .service-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 16px; font-size: 13px; font-weight: 600;
+      color: var(--blue); text-decoration: none;
+      transition: gap 0.2s;
+    }
+    .service-link:hover { gap: 10px; }
+
+    /* ── APPROACH ──────────────────────────────────── */
+    .approach-bg { background: var(--bg-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+    .approach-steps {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 48px;
+    }
+
+    .approach-step { position: relative; }
+
+    .step-num {
+      font-size: 64px; font-weight: 800;
+      color: rgba(37,99,235,0.08); letter-spacing: -2px;
+      line-height: 1; margin-bottom: -8px;
+    }
+
+    .step-title { font-size: 18px; font-weight: 700; margin-bottom: 12px; }
+    .step-body { font-size: 14px; color: var(--text-muted); line-height: 1.7; }
+
+    /* ── INSIGHTS ──────────────────────────────────── */
+    .insights-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .insight-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      padding: 28px; cursor: pointer;
+      transition: border-color 0.2s;
+      text-decoration: none; display: block;
+    }
+
+    .insight-card:hover { border-color: var(--border-blue); }
+
+    .insight-tag {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--blue-light);
+      margin-bottom: 12px;
+    }
+
+    .insight-title {
+      font-size: 16px; font-weight: 600; color: var(--text);
+      line-height: 1.4; margin-bottom: 10px; letter-spacing: -0.2px;
+    }
+
+    .insight-body { font-size: 13px; color: var(--text-dim); line-height: 1.6; }
+
+    /* ── TESTIMONIAL ───────────────────────────────── */
+    .testimonial {
+      max-width: 740px; margin: 0 auto;
+      text-align: center; padding: 80px 24px;
+    }
+
+    .testimonial blockquote {
+      font-size: clamp(18px, 2.5vw, 24px);
+      font-weight: 300; color: var(--text);
+      line-height: 1.6; margin-bottom: 28px;
+      letter-spacing: -0.3px;
+    }
+
+    .testimonial blockquote::before { content: '\201C'; color: var(--blue); font-size: 2em; line-height: 0; vertical-align: -0.4em; margin-right: 4px; }
+    .testimonial blockquote::after  { content: '\201D'; color: var(--blue); font-size: 2em; line-height: 0; vertical-align: -0.4em; margin-left:  4px; }
+
+    .testimonial cite { font-size: 13px; color: var(--text-dim); font-style: normal; }
+    .testimonial cite strong { display: block; color: var(--text-muted); margin-bottom: 2px; font-weight: 500; }
+
+    /* ── CONTACT ───────────────────────────────────── */
+    .contact-bg { background: var(--bg-card); border-top: 1px solid var(--border); }
+
+    .contact-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 64px;
+    }
+
+    .contact-left h2 { margin-bottom: 16px; }
+
+    .contact-left p { font-size: 16px; color: var(--text-muted); line-height: 1.7; margin-bottom: 32px; }
+
+    .contact-info { display: flex; flex-direction: column; gap: 14px; }
+
+    .ci-item {
+      display: flex; align-items: center; gap: 14px;
+      font-size: 14px; color: var(--text-muted);
+    }
+
+    .ci-icon {
+      width: 36px; height: 36px; background: var(--blue-glow);
+      border: 1px solid var(--border-blue);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; flex-shrink: 0;
+    }
+
+    .contact-form { display: flex; flex-direction: column; gap: 16px; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+
+    label {
+      font-size: 12px; font-weight: 600; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.06em;
+    }
+
+    input, select, textarea {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      color: var(--text); padding: 12px 14px;
+      font-family: 'Inter', sans-serif; font-size: 14px;
+      outline: none; transition: border-color 0.2s;
+      width: 100%;
+    }
+
+    input:focus, select:focus, textarea:focus { border-color: var(--blue); }
+    select option { background: #111118; }
+    textarea { resize: vertical; min-height: 120px; }
+    input[name="bot-field"] { display: none; }
+
+    .form-submit {
+      background: var(--blue); color: #fff; border: none;
+      padding: 14px 28px; font-weight: 600; font-size: 15px;
+      cursor: pointer; font-family: 'Inter', sans-serif;
+      transition: background 0.2s; text-align: left;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .form-submit:hover { background: var(--blue-dark); }
+
+    /* ── FOOTER ────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 24px;
+    }
+
+    .footer-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 16px;
+    }
+
+    .footer-logo { font-size: 15px; font-weight: 700; }
+    .footer-logo span { color: var(--blue); }
+
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a { font-size: 13px; color: var(--text-dim); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--text); }
+
+    .footer-copy { font-size: 12px; color: var(--text-dim); }
+
+    /* ── RESPONSIVE ────────────────────────────────── */
+    @media (max-width: 900px) {
+      .hero, .about-grid, .contact-grid, .fsi-grid { grid-template-columns: 1fr; gap: 40px; }
+      .hero { padding: 110px 24px 60px; }
+      .hero-feature-card { display: none; }
+      .services-grid { grid-template-columns: 1fr 1fr; }
+      .approach-steps, .insights-grid { grid-template-columns: 1fr; gap: 32px; }
+      .nav-links { display: none; }
+      .nav-toggle { display: block; }
+    }
+
+    @media (max-width: 600px) {
+      .services-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .hero-stats { grid-template-columns: 1fr 1fr; }
+      .preview-metric-row { grid-template-columns: 1fr 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">Quantumleap<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#fsi-roi">FSI AI ROI</a></li>
+      <li><a href="#approach">Approach</a></li>
+      <li><a href="#insights">Insights</a></li>
+      <li><a href="#contact" class="nav-cta">Start a Conversation</a></li>
+    </ul>
+    <button class="nav-toggle" onclick="this.nextElementSibling&&this.nextElementSibling.remove()" aria-label="Menu">☰</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section style="padding:0;">
+  <div class="hero">
+    <div class="hero-left">
+      <div class="hero-eyebrow">AI &amp; Customer Experience Consulting</div>
+      <h1>Transform Your Enterprise with <em>Intelligent</em> Strategy</h1>
+      <p class="hero-sub">Helping global enterprises harness AI, reimagine customer experiences, and accelerate digital transformation — backed by 25+ years of Fortune 500 leadership.</p>
+      <div class="hero-btns">
+        <a href="#contact" class="btn-primary">Schedule a Consultation</a>
+        <a href="#services" class="btn-ghost">Explore Services</a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="stat-val">25+</div>
+          <div class="stat-label">Years Enterprise Experience</div>
+        </div>
+        <div>
+          <div class="stat-val">F500</div>
+          <div class="stat-label">Client Portfolio</div>
+        </div>
+        <div>
+          <div class="stat-val">Global</div>
+          <div class="stat-label">Consulting Reach</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-feature-card">
+        <div class="feature-card-badge">★ New Capability</div>
+        <div class="feature-card-title">FSI AI ROI Assessment</div>
+        <p class="feature-card-desc">The only AI business case framework built specifically for financial services — modeling true total cost, regulatory risk-adjusted returns, and sub-vertical benchmarks. Board-ready output in 10 minutes.</p>
+        <div class="feature-card-metrics">
+          <div class="fcm-item">
+            <div class="fcm-val">6</div>
+            <div class="fcm-label">Value Dimensions</div>
+          </div>
+          <div class="fcm-item">
+            <div class="fcm-val">8</div>
+            <div class="fcm-label">Use Cases Modeled</div>
+          </div>
+          <div class="fcm-item">
+            <div class="fcm-val">SR 11-7</div>
+            <div class="fcm-label">MRM Compliant</div>
+          </div>
+          <div class="fcm-item">
+            <div class="fcm-val">36mo</div>
+            <div class="fcm-label">Cash Flow View</div>
+          </div>
+        </div>
+        <a href="fsi-roi.html" class="feature-card-cta">Take the Free Assessment →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FSI AI ROI SPOTLIGHT -->
+<section class="fsi-spotlight" id="fsi-roi">
+  <div class="section-inner">
+    <div class="fsi-grid">
+      <div class="fsi-left">
+        <div class="section-label">Featured Capability · Financial Services</div>
+        <h2>The AI Investment Memorandum for <span>Financial Services</span></h2>
+        <p class="fsi-body">
+          Most AI business cases in financial services miss 60–70% of actual costs. Vendor calculators are biased. Generic frameworks ignore regulatory reality. Your CFO knows the difference — and so do we.
+          <br><br>
+          We built a six-dimension framework calibrated to your sub-vertical (bank, insurer, asset manager, capital markets), regulatory environment, and actual deployment economics. The output your board expects: IRR, payback period, sensitivity analysis, and a 36-month cash flow waterfall.
+        </p>
+        <div class="fsi-dimensions">
+          <div class="fsi-dim">
+            <div class="fsi-dim-num">01</div>
+            <div class="fsi-dim-content">
+              <div class="fsi-dim-title">Use Case Prioritization Score</div>
+              <div class="fsi-dim-desc">Rank use cases by regulatory sensitivity, data readiness, and revenue adjacency before calculating anything.</div>
+            </div>
+          </div>
+          <div class="fsi-dim">
+            <div class="fsi-dim-num">02</div>
+            <div class="fsi-dim-content">
+              <div class="fsi-dim-title">True Total Cost Architecture</div>
+              <div class="fsi-dim-desc">Data remediation, SR 11-7 model validation ($150K–$750K), change management, and ongoing governance — all included.</div>
+            </div>
+          </div>
+          <div class="fsi-dim">
+            <div class="fsi-dim-num">03</div>
+            <div class="fsi-dim-content">
+              <div class="fsi-dim-title">FSI Sub-Vertical Calibration</div>
+              <div class="fsi-dim-desc">Retail bank, investment bank, asset manager, P&C insurer, life &amp; annuity, fintech — each modeled with the right benchmarks.</div>
+            </div>
+          </div>
+          <div class="fsi-dim">
+            <div class="fsi-dim-num">04</div>
+            <div class="fsi-dim-content">
+              <div class="fsi-dim-title">Regulatory Risk-Adjusted Return</div>
+              <div class="fsi-dim-desc">Quantifies both regulatory exposure cost and the regulatory dividend from compliance-improving AI use cases.</div>
+            </div>
+          </div>
+          <div class="fsi-dim">
+            <div class="fsi-dim-num">05</div>
+            <div class="fsi-dim-content">
+              <div class="fsi-dim-title">Adoption Velocity Curve</div>
+              <div class="fsi-dim-desc">36-month phased cash flow — not a single number. Modeled against your actual change management approach.</div>
+            </div>
+          </div>
+          <div class="fsi-dim">
+            <div class="fsi-dim-num">06</div>
+            <div class="fsi-dim-content">
+              <div class="fsi-dim-title">Strategic Optionality Value</div>
+              <div class="fsi-dim-desc">Credit for AI investments that build reusable data and model infrastructure enabling future use cases.</div>
+            </div>
+          </div>
+        </div>
+        <div class="fsi-btns">
+          <a href="fsi-roi.html" class="btn-primary">Take the Free Assessment →</a>
+          <a href="#contact" class="btn-ghost">Request Full Memorandum</a>
+        </div>
+      </div>
+
+      <div class="fsi-right">
+        <div class="fsi-preview">
+          <div class="fsi-preview-header">
+            <div>
+              <div class="fsi-preview-title">Sample Analysis Output</div>
+              <div class="fsi-preview-sub">Mid-size retail bank · 8,000 employees · 3 use cases</div>
+            </div>
+            <div class="live-badge"><div class="live-dot"></div>Live Tool</div>
+          </div>
+          <div class="fsi-preview-body">
+            <div class="preview-metric-row">
+              <div class="pm-card">
+                <div class="pm-val">$42M</div>
+                <div class="pm-label">3yr Net Value</div>
+              </div>
+              <div class="pm-card">
+                <div class="pm-val">187%</div>
+                <div class="pm-label">3yr ROI</div>
+              </div>
+              <div class="pm-card">
+                <div class="pm-val">21mo</div>
+                <div class="pm-label">Payback</div>
+              </div>
+            </div>
+
+            <div class="preview-bar-section">
+              <div class="pb-label"><span>Fraud &amp; AML Value</span><span style="color:#3b82f6;font-weight:600">$18.2M</span></div>
+              <div class="pb-track"><div class="pb-fill" style="--w:82%"></div></div>
+            </div>
+            <div class="preview-bar-section">
+              <div class="pb-label"><span>Contact Center AI</span><span style="color:#3b82f6;font-weight:600">$11.4M</span></div>
+              <div class="pb-track"><div class="pb-fill" style="--w:52%; animation-delay:0.2s"></div></div>
+            </div>
+            <div class="preview-bar-section">
+              <div class="pb-label"><span>Employee Productivity</span><span style="color:#3b82f6;font-weight:600">$8.1M</span></div>
+              <div class="pb-track"><div class="pb-fill" style="--w:37%; animation-delay:0.4s"></div></div>
+            </div>
+            <div class="preview-bar-section">
+              <div class="pb-label"><span style="color:#f87171">Data Remediation Cost</span><span style="color:#f87171;font-weight:600">-$6.2M</span></div>
+              <div class="pb-track"><div class="pb-fill" style="--w:28%; background:linear-gradient(90deg,#ef4444,#f87171); animation-delay:0.5s"></div></div>
+            </div>
+            <div class="preview-bar-section">
+              <div class="pb-label"><span style="color:#f87171">MRM / Compliance Cost</span><span style="color:#f87171;font-weight:600">-$1.8M</span></div>
+              <div class="pb-track"><div class="pb-fill" style="--w:8%; background:linear-gradient(90deg,#ef4444,#f87171); animation-delay:0.6s"></div></div>
+            </div>
+
+            <div class="preview-disclaimer">
+              This is an illustrative sample. Your assessment is calibrated to your sub-vertical, employee count, data readiness, and selected use cases.
+            </div>
+            <a href="fsi-roi.html" class="preview-cta">Run Your Assessment — Free →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-left">
+        <div class="section-label">About</div>
+        <h2>Where Deep Enterprise Experience Meets AI Innovation</h2>
+        <div class="about-highlight">
+          "Not Just Advice. Execution-Ready Strategy."
+        </div>
+        <div class="about-body">
+          <p>Quantumleap Insights was founded by Babith Bhoopalan, a technology leader with over 25 years of enterprise experience including significant tenure at Microsoft, where he drove AI initiatives, customer experience programs, and large-scale digital transformation.</p>
+          <p>Today, we partner with enterprises globally to navigate the AI revolution — from Copilot strategy and CRM transformation to license optimization and data strategy. Our work spans direct consulting engagements and expert network partnerships with the world's leading investment and consulting firms.</p>
+          <p>We don't deliver shelf-ware reports. Every engagement produces actionable roadmaps, executive-ready frameworks, and measurable outcomes. Our clients range from Fortune 500 technology companies to investment firms seeking deep domain expertise in AI and enterprise technology.</p>
+        </div>
+      </div>
+      <div class="about-right">
+        <div class="expertise-card">
+          <div class="ec-title">⚡ Enterprise AI Strategy</div>
+          <div class="ec-body">25+ years driving AI initiatives inside and alongside Fortune 500 organizations, including significant Microsoft tenure across Copilot, Dynamics, and enterprise data platforms.</div>
+        </div>
+        <div class="expertise-card">
+          <div class="ec-title">🏦 Financial Services AI ROI</div>
+          <div class="ec-body">Proprietary six-dimension framework built for FSI sub-verticals — the only business case methodology that accounts for Model Risk Management overhead, regulatory risk-adjusted returns, and sub-vertical calibration.</div>
+        </div>
+        <div class="expertise-card">
+          <div class="ec-title">🌐 Global Expert Networks</div>
+          <div class="ec-body">Available through leading expert networks for investment research, due diligence, and strategic advisory. Deep domain expertise trusted by top-tier consulting and investment firms.</div>
+        </div>
+        <div class="expertise-card">
+          <div class="ec-title">🎯 CX Transformation</div>
+          <div class="ec-body">End-to-end customer experience reimagination — from Voice of Customer systems and CRM modernization to AI-powered experience platforms and journey architecture.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" style="padding-top:0;">
+  <div class="section-inner">
+    <div class="section-label">Services</div>
+    <h2>How We Help Enterprises Win</h2>
+    <p class="section-sub">Strategic consulting at the intersection of AI, customer experience, and enterprise technology.</p>
+
+    <div class="services-grid">
+      <!-- FEATURED -->
+      <div class="service-card featured">
+        <div class="service-icon">📊</div>
+        <div class="service-title">FSI AI ROI &amp; Investment Advisory</div>
+        <div class="service-body">Board-ready AI investment analysis calibrated to your financial services sub-vertical. Six-dimension framework modeling true total cost, regulatory risk-adjusted returns, adoption velocity, and strategic optionality. Engagements from $25,000.</div>
+        <a href="fsi-roi.html" class="service-link">Take the Free Assessment →</a>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">🤖</div>
+        <div class="service-title">Enterprise AI Strategy</div>
+        <div class="service-body">End-to-end AI transformation advisory including Copilot implementation, AI data strategy, use-case prioritization, and organizational readiness. We help you move from AI experimentation to enterprise-scale value.</div>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">💡</div>
+        <div class="service-title">Customer Experience Transformation</div>
+        <div class="service-body">Reimagine your CX stack — from Voice of Customer systems to CRM modernization. Deep expertise in customer journey mapping, feedback loops, and AI-powered experience platforms.</div>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">💰</div>
+        <div class="service-title">License &amp; Cost Optimization</div>
+        <div class="service-body">Benchmark your enterprise software licensing against industry standards. Identify savings, optimize spend, and negotiate from a position of data-driven insight.</div>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">🔬</div>
+        <div class="service-title">Expert Network Consulting</div>
+        <div class="service-body">Available through leading expert networks for investment research, due diligence, and strategic advisory. Deep domain expertise in enterprise technology, AI trends, and market dynamics.</div>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">📈</div>
+        <div class="service-title">Market &amp; Competitive Intelligence</div>
+        <div class="service-body">Comprehensive analysis of AI market trends, competitive landscapes, and technology disruption patterns. Actionable intelligence for executive decision-making and investment strategy.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- APPROACH -->
+<section class="approach-bg" id="approach">
+  <div class="section-inner">
+    <div class="section-label">Our Approach</div>
+    <h2>From Insight to Impact</h2>
+    <p class="section-sub">Every engagement follows a rigorous, outcome-focused methodology refined across hundreds of enterprise transformations.</p>
+    <div class="approach-steps">
+      <div class="approach-step">
+        <div class="step-num">01</div>
+        <div class="step-title">Discover &amp; Diagnose</div>
+        <div class="step-body">Deep-dive assessment of your current state — technology landscape, organizational readiness, competitive positioning, and untapped opportunities. We ask the questions others miss.</div>
+      </div>
+      <div class="approach-step">
+        <div class="step-num">02</div>
+        <div class="step-title">Strategize &amp; Architect</div>
+        <div class="step-body">Develop an execution-ready roadmap with clear milestones, ROI frameworks, and risk mitigation strategies. Every recommendation is grounded in real-world enterprise experience.</div>
+      </div>
+      <div class="approach-step">
+        <div class="step-num">03</div>
+        <div class="step-title">Accelerate &amp; Scale</div>
+        <div class="step-body">Hands-on support through implementation, change management, and scaling. We stay engaged until your teams are empowered and outcomes are delivered.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INSIGHTS -->
+<section id="insights">
+  <div class="section-inner">
+    <div class="section-label">Insights &amp; Thought Leadership</div>
+    <h2>Shaping the Conversation on AI</h2>
+    <p class="section-sub">Research, analysis, and frameworks that help enterprise leaders make better decisions in a rapidly evolving landscape.</p>
+    <div class="insights-grid">
+      <a href="fsi-roi.html" class="insight-card">
+        <div class="insight-tag">★ Financial Services · New</div>
+        <div class="insight-title">The Hidden Costs Destroying Your AI Business Case in Financial Services</div>
+        <div class="insight-body">Why 62% of FSI AI projects fail to meet ROI expectations — and the six dimensions you're probably not modeling. Includes our free interactive assessment.</div>
+      </a>
+      <a href="#" class="insight-card">
+        <div class="insight-tag">AI &amp; Careers</div>
+        <div class="insight-title">Future-Proof Careers: A Parent's Guide to Navigating AI's Impact</div>
+        <div class="insight-body">A comprehensive guide helping parents understand how AI is reshaping the career landscape and how to prepare the next generation.</div>
+      </a>
+      <a href="#" class="insight-card">
+        <div class="insight-tag">Enterprise AI</div>
+        <div class="insight-title">The CRM Revolution: Why AI Will Replace Your Customer Platform</div>
+        <div class="insight-body">Deep dive into how AI-native CRM solutions are challenging incumbent platforms and reshaping customer experience technology.</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<div style="background:var(--bg-card); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
+  <div class="testimonial">
+    <blockquote>Babith brings a rare combination of deep technical expertise and strategic business acumen. His insights on AI transformation gave our leadership team the confidence to move decisively.</blockquote>
+    <cite>
+      <strong>Enterprise Technology Executive</strong>
+      Fortune 500 Client
+    </cite>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<section class="contact-bg" id="contact">
+  <div class="section-inner">
+    <div class="contact-grid">
+      <div class="contact-left">
+        <div class="section-label">Contact</div>
+        <h2>Ready to Accelerate Your AI Transformation?</h2>
+        <p>Whether you're exploring AI strategy, building a financial services AI business case, transforming customer experiences, or need expert advisory for investment research — let's talk about what's possible.</p>
+        <div class="contact-info">
+          <div class="ci-item">
+            <div class="ci-icon">✉</div>
+            <span>insights@quantumleap.llc</span>
+          </div>
+          <div class="ci-item">
+            <div class="ci-icon">🌐</div>
+            <span>Available via Leading Expert Networks</span>
+          </div>
+          <div class="ci-item">
+            <div class="ci-icon">📍</div>
+            <span>Seattle, WA · Consulting Globally</span>
+          </div>
+          <div class="ci-item" style="margin-top:8px;">
+            <a href="fsi-roi.html" class="btn-primary" style="font-size:14px; padding:12px 24px;">Try the Free FSI AI ROI Assessment →</a>
+          </div>
+        </div>
+      </div>
+      <div class="contact-right">
+        <form class="contact-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+          <input type="hidden" name="form-name" value="contact" />
+          <input name="bot-field" />
+          <div class="form-row">
+            <div class="form-group">
+              <label for="firstName">First Name</label>
+              <input type="text" id="firstName" name="firstName" required />
+            </div>
+            <div class="form-group">
+              <label for="lastName">Last Name</label>
+              <input type="text" id="lastName" name="lastName" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email">Work Email</label>
+            <input type="email" id="email" name="email" required />
+          </div>
+          <div class="form-group">
+            <label for="interest">Area of Interest</label>
+            <select id="interest" name="interest">
+              <option value="">Select an area...</option>
+              <option>FSI AI ROI &amp; Investment Memorandum</option>
+              <option>Enterprise AI Strategy</option>
+              <option>CX Transformation</option>
+              <option>License &amp; Cost Optimization</option>
+              <option>Expert Network Consultation</option>
+              <option>Market Intelligence</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message">Tell Us About Your Challenge</label>
+            <textarea id="message" name="message"></textarea>
+          </div>
+          <button type="submit" class="form-submit">
+            Send Message <span>→</span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">Quantumleap<span>.</span></div>
+    <div class="footer-links">
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="fsi-roi.html">FSI AI ROI</a>
+      <a href="#approach">Approach</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="footer-copy">© 2025 Quantumleap Insights LLC. All rights reserved.</div>
+  </div>
+</footer>
+
+</body>
+</html>
