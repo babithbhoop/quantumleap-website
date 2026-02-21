@@ -531,11 +531,285 @@
       .wf-bar-wrap { display: none; }
       .wf-row { grid-template-columns: 1fr auto; }
     }
+
+    /* ── PRIVACY MODAL ───────────────────────────────── */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0; z-index: 500;
+      background: rgba(0,0,0,0.75); backdrop-filter: blur(4px);
+      align-items: center; justify-content: center; padding: 24px;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-box {
+      background: var(--bg-card); border: 1px solid var(--border-blue);
+      max-width: 640px; width: 100%; max-height: 80vh;
+      display: flex; flex-direction: column;
+    }
+    .modal-header {
+      padding: 24px 28px 16px; border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .modal-header-title {
+      font-size: 15px; font-weight: 700; color: var(--text);
+    }
+    .modal-close {
+      background: none; border: none; color: var(--text-dim);
+      cursor: pointer; font-size: 20px; padding: 0; line-height: 1;
+    }
+    .modal-close:hover { color: var(--text); }
+    .modal-body {
+      padding: 24px 28px; overflow-y: auto; flex: 1;
+      font-size: 13px; color: var(--text-muted); line-height: 1.8;
+    }
+    .modal-body h3 {
+      font-size: 12px; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase; color: var(--blue-light);
+      margin: 20px 0 8px;
+    }
+    .modal-body h3:first-child { margin-top: 0; }
+    .modal-body p { margin-bottom: 10px; }
+    .modal-footer {
+      padding: 20px 28px; border-top: 1px solid var(--border);
+      display: flex; gap: 12px; justify-content: flex-end;
+    }
+
+    /* ── CONTACT GATE (Step -1) ──────────────────────── */
+    .gate-section {
+      max-width: 1100px; margin: 0 auto; padding: 40px 24px 80px;
+    }
+    .gate-section.hidden { display: none; }
+    .gate-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      padding: 48px; max-width: 580px; margin: 0 auto;
+    }
+    .gate-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--blue-glow); border: 1px solid var(--border-blue);
+      padding: 4px 12px; margin-bottom: 20px;
+      font-size: 10px; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--blue-light);
+    }
+    .gate-title { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+    .gate-desc { font-size: 14px; color: var(--text-muted); margin-bottom: 28px; line-height: 1.6; }
+    .gate-field { margin-bottom: 18px; }
+    .gate-field label {
+      display: block; font-size: 11px; font-weight: 600;
+      letter-spacing: .08em; text-transform: uppercase;
+      color: var(--text-dim); margin-bottom: 7px;
+    }
+    .gate-field input, .gate-field select {
+      width: 100%; background: var(--bg-card2);
+      border: 1px solid var(--border); color: var(--text);
+      padding: 11px 14px; font-size: 14px; font-family: inherit;
+      outline: none; transition: border-color .2s;
+    }
+    .gate-field input:focus, .gate-field select:focus {
+      border-color: var(--border-blue);
+    }
+    .gate-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .consent-box {
+      background: var(--bg-card2); border: 1px solid var(--border);
+      padding: 16px; margin-bottom: 20px;
+      font-size: 12px; color: var(--text-dim); line-height: 1.7;
+    }
+    .consent-check {
+      display: flex; gap: 12px; align-items: flex-start; margin-bottom: 10px;
+    }
+    .consent-check input[type=checkbox] {
+      margin-top: 2px; accent-color: var(--blue); flex-shrink: 0;
+      width: 16px; height: 16px; cursor: pointer;
+    }
+    .consent-check label { cursor: pointer; line-height: 1.5; }
+    .consent-link {
+      color: var(--blue-light); text-decoration: underline; cursor: pointer;
+      font-weight: 600;
+    }
+    .gate-submit {
+      width: 100%; background: var(--blue); color: #fff;
+      border: none; padding: 14px; font-size: 15px; font-weight: 600;
+      font-family: inherit; cursor: pointer; transition: background .2s;
+    }
+    .gate-submit:hover { background: var(--blue-dark); }
+    .gate-error {
+      font-size: 12px; color: var(--red); margin-top: 10px; display: none;
+    }
+
+    /* ── FEEDBACK WIDGET ─────────────────────────────── */
+    .feedback-section {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-top: 2px solid var(--border-blue);
+      padding: 32px 36px; margin-top: 48px;
+    }
+    .feedback-title {
+      font-size: 14px; font-weight: 700; margin-bottom: 4px;
+    }
+    .feedback-desc {
+      font-size: 13px; color: var(--text-dim); margin-bottom: 20px;
+    }
+    .feedback-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+    .feedback-field label {
+      display: block; font-size: 10px; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase;
+      color: var(--text-dim); margin-bottom: 6px;
+    }
+    .feedback-field select, .feedback-field textarea, .feedback-field input {
+      width: 100%; background: var(--bg-card2); border: 1px solid var(--border);
+      color: var(--text); padding: 10px 14px; font-size: 13px;
+      font-family: inherit; outline: none; transition: border-color .2s;
+      resize: vertical;
+    }
+    .feedback-field select:focus, .feedback-field textarea:focus, .feedback-field input:focus {
+      border-color: var(--border-blue);
+    }
+    .rating-row {
+      display: flex; gap: 8px; margin-bottom: 14px;
+    }
+    .rating-btn {
+      flex: 1; padding: 10px; background: var(--bg-card2);
+      border: 1px solid var(--border); color: var(--text-muted);
+      cursor: pointer; font-size: 13px; font-weight: 600;
+      font-family: inherit; transition: all .15s; text-align: center;
+    }
+    .rating-btn:hover, .rating-btn.active { background: var(--blue-glow); border-color: var(--border-blue); color: var(--text); }
+    .feedback-submit {
+      background: transparent; border: 1px solid var(--border-blue);
+      color: var(--blue-light); padding: 11px 28px;
+      font-size: 13px; font-weight: 600; font-family: inherit;
+      cursor: pointer; transition: all .2s;
+    }
+    .feedback-submit:hover { background: var(--blue-glow); }
+    .feedback-success {
+      display: none; padding: 16px; background: var(--green-dim);
+      border: 1px solid rgba(34,197,94,0.2);
+      font-size: 13px; color: var(--green); margin-top: 14px;
+    }
   </style>
 </head>
 <body>
 
-<!-- NAV -->
+<!-- NETLIFY FORM TARGETS (hidden — required for Netlify to detect at build time) -->
+<form name="fsi-assessment-gate" netlify netlify-honeypot="bot-field" hidden>
+  <input name="bot-field" />
+  <input name="first-name" /><input name="last-name" />
+  <input name="work-email" /><input name="company" />
+  <input name="job-title" /><input name="company-size" />
+  <input name="sub-vertical" /><input name="consent" />
+  <input name="timestamp" />
+</form>
+<form name="fsi-assessment-feedback" netlify netlify-honeypot="bot-field" hidden>
+  <input name="bot-field" />
+  <input name="respondent-email" />
+  <input name="feedback-type" /><input name="rating" />
+  <textarea name="feedback-text"></textarea>
+  <input name="feature-request" /><input name="timestamp" />
+</form>
+
+<!-- PRIVACY MODAL -->
+<div class="modal-overlay" id="privacyModal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-header-title">Privacy &amp; Data Use Disclosure</div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <p><strong>Effective Date: February 2026 · Quantumleap Insights LLC</strong></p>
+
+      <h3>What We Collect</h3>
+      <p>When you complete the FSI AI ROI Assessment, we collect the contact information you provide (name, work email, company, job title, and company size) along with your assessment inputs (FSI sub-vertical, AI maturity stage, use cases selected, investment parameters, and deployment model choices). We also collect the timestamp of your submission and your stated area of consulting interest.</p>
+
+      <h3>How We Use Your Information</h3>
+      <p><strong>Primary use:</strong> To follow up with you regarding your assessment results, to provide additional analysis, and to discuss whether Quantumleap Insights' advisory services are a fit for your organization's AI investment needs.</p>
+      <p><strong>Service improvement:</strong> Aggregated, anonymized assessment data is used to continuously improve the accuracy of our ROI framework, calibrate industry benchmarks, and develop new use case models. Individual responses are never published or shared in identifiable form.</p>
+      <p><strong>Thought leadership:</strong> Anonymized, aggregate trends across assessments (e.g., "X% of retail banks are at the Piloting stage") may be referenced in Quantumleap Insights publications or client presentations.</p>
+
+      <h3>What We Do Not Do</h3>
+      <p>We do not sell, rent, or trade your personal information to third parties. We do not add you to mass marketing lists without your explicit consent. We do not use your data for any purpose unrelated to AI strategy advisory services.</p>
+
+      <h3>Data Retention</h3>
+      <p>Contact and assessment data is retained for up to 36 months from the date of submission, or until you request deletion. After this period, data is either deleted or fully anonymized. You may request deletion at any time by emailing insights&#64;quantumleap&#46;llc.</p>
+
+      <h3>Security</h3>
+      <p>Assessment submissions are transmitted via encrypted HTTPS and stored in Netlify's secure form infrastructure. Access is restricted to authorized Quantumleap Insights personnel only.</p>
+
+      <h3>Your Rights</h3>
+      <p>You have the right to access, correct, or request deletion of any personal data we hold about you. To exercise these rights, contact us at insights&#64;quantumleap&#46;llc. If you are located in the EU/EEA, you have additional rights under GDPR, including the right to lodge a complaint with your local supervisory authority.</p>
+
+      <h3>Contact</h3>
+      <p>Quantumleap Insights LLC · Seattle, WA · insights&#64;quantumleap&#46;llc</p>
+    </div>
+    <div class="modal-footer">
+      <button class="gate-submit" style="width:auto;padding:10px 28px;" onclick="closeModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT GATE (shown before assessment) -->
+<div class="gate-section" id="gateSection">
+  <div class="gate-card">
+    <div class="gate-tag">Free Assessment · Takes 10 Minutes</div>
+    <div class="gate-title">Before We Begin</div>
+    <div class="gate-desc">We'll tailor your analysis and send you a summary. Your information is used solely for follow-up and framework improvement — never sold or shared. Please read our <span class="consent-link" onclick="openModal()">Privacy &amp; Data Use Disclosure</span> before proceeding.</div>
+
+    <form id="gateForm" onsubmit="submitGate(event)">
+      <input name="bot-field" style="display:none" />
+
+      <div class="gate-row">
+        <div class="gate-field">
+          <label>First Name *</label>
+          <input type="text" id="g-first" name="first-name" placeholder="Jane" required />
+        </div>
+        <div class="gate-field">
+          <label>Last Name *</label>
+          <input type="text" id="g-last" name="last-name" placeholder="Smith" required />
+        </div>
+      </div>
+
+      <div class="gate-field">
+        <label>Work Email *</label>
+        <input type="email" id="g-email" name="work-email" placeholder="jane@institution.com" required />
+      </div>
+
+      <div class="gate-field">
+        <label>Company / Institution *</label>
+        <input type="text" id="g-company" name="company" placeholder="First National Bank" required />
+      </div>
+
+      <div class="gate-row">
+        <div class="gate-field">
+          <label>Job Title *</label>
+          <input type="text" id="g-title" name="job-title" placeholder="Chief Digital Officer" required />
+        </div>
+        <div class="gate-field">
+          <label>Company Size</label>
+          <select id="g-size" name="company-size">
+            <option value="">Select...</option>
+            <option>Under 500 employees</option>
+            <option>500–2,000</option>
+            <option>2,000–10,000</option>
+            <option>10,000–50,000</option>
+            <option>50,000+</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="consent-box">
+        <div class="consent-check">
+          <input type="checkbox" id="g-consent" required />
+          <label for="g-consent">I have read and agree to the <span class="consent-link" onclick="openModal()">Privacy &amp; Data Use Disclosure</span>. I understand that Quantumleap Insights LLC will store my contact and assessment information to follow up regarding my results and improve the assessment framework.</label>
+        </div>
+        <div class="consent-check">
+          <input type="checkbox" id="g-updates" />
+          <label for="g-updates">I'd like to receive occasional FSI AI insights and benchmark updates from Quantumleap Insights. (Optional)</label>
+        </div>
+      </div>
+
+      <button type="submit" class="gate-submit">Start My Free Assessment →</button>
+      <div class="gate-error" id="gateError">Please complete all required fields and accept the privacy disclosure.</div>
+    </form>
+  </div>
+</div>
+
+<div id="assessmentWrapper" style="display:none;">
+
 <nav>
   <div class="nav-inner">
     <a href="index.html" class="nav-logo">Quantumleap<span>.</span></a>
@@ -932,11 +1206,155 @@
       </div>
       <div class="cta-disclaimer">Quantumleap Insights LLC · insights&#64;quantumleap&#46;llc</div>
     </div>
-  </div>
+
+    <!-- FEEDBACK WIDGET -->
+    <div class="feedback-section">
+      <div class="feedback-title">Help Us Improve This Framework</div>
+      <div class="feedback-desc">Your feedback directly shapes how this tool evolves. Feature requests, accuracy issues, missing use cases — all of it helps.</div>
+
+      <form id="feedbackForm" onsubmit="submitFeedback(event)">
+        <input name="bot-field" style="display:none" />
+        <input type="hidden" id="fb-email" name="respondent-email" />
+
+        <div style="margin-bottom:12px;">
+          <div style="font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-dim);margin-bottom:8px;">How accurate was this analysis for your situation?</div>
+          <div class="rating-row">
+            <button type="button" class="rating-btn" onclick="setRating(1)">1 — Off</button>
+            <button type="button" class="rating-btn" onclick="setRating(2)">2 — Partial</button>
+            <button type="button" class="rating-btn" onclick="setRating(3)">3 — Close</button>
+            <button type="button" class="rating-btn" onclick="setRating(4)">4 — Good</button>
+            <button type="button" class="rating-btn" onclick="setRating(5)">5 — Spot On</button>
+          </div>
+          <input type="hidden" id="fb-rating" name="rating" value="" />
+        </div>
+
+        <div class="feedback-row">
+          <div class="feedback-field">
+            <label>Feedback Type</label>
+            <select name="feedback-type" id="fb-type">
+              <option value="">Select...</option>
+              <option>Missing use case or industry</option>
+              <option>ROI calculation seems off</option>
+              <option>Feature request</option>
+              <option>Regulatory / compliance issue</option>
+              <option>General comment</option>
+              <option>Bug or technical issue</option>
+            </select>
+          </div>
+          <div class="feedback-field">
+            <label>Feature Request (optional)</label>
+            <input type="text" name="feature-request" id="fb-feature" placeholder="e.g. Add insurance sub-vertical benchmarks" />
+          </div>
+        </div>
+
+        <div class="feedback-field" style="margin-bottom:16px;">
+          <label>Your Feedback</label>
+          <textarea name="feedback-text" id="fb-text" rows="4" placeholder="What would make this more useful? What did we get wrong? What's missing?"></textarea>
+        </div>
+
+        <input type="hidden" name="timestamp" id="fb-timestamp" />
+        <button type="submit" class="feedback-submit">Submit Feedback →</button>
+      </form>
+
+      <div class="feedback-success" id="feedbackSuccess">
+        ✓ Thank you — your feedback has been received and will directly inform the next framework update.
+      </div>
+    </div>
+
+  </div><!-- /results -->
 
 </div><!-- /main -->
+</div><!-- /assessmentWrapper -->
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
+// ── GATE & MODAL ──────────────────────────────────────────────────
+let gateData = {};
+
+function openModal() {
+  document.getElementById('privacyModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('privacyModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('privacyModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+function submitGate(e) {
+  e.preventDefault();
+  const first   = document.getElementById('g-first').value.trim();
+  const last    = document.getElementById('g-last').value.trim();
+  const email   = document.getElementById('g-email').value.trim();
+  const company = document.getElementById('g-company').value.trim();
+  const title   = document.getElementById('g-title').value.trim();
+  const consent = document.getElementById('g-consent').checked;
+  const err     = document.getElementById('gateError');
+
+  if (!first || !last || !email || !company || !title || !consent) {
+    err.style.display = 'block'; return;
+  }
+  err.style.display = 'none';
+
+  gateData = { first, last, email, company, title };
+
+  // Submit to Netlify
+  const fd = new FormData();
+  fd.append('form-name',    'fsi-assessment-gate');
+  fd.append('first-name',   first);
+  fd.append('last-name',    last);
+  fd.append('work-email',   email);
+  fd.append('company',      company);
+  fd.append('job-title',    title);
+  fd.append('company-size', document.getElementById('g-size').value);
+  fd.append('consent',      'true');
+  fd.append('updates-opt-in', document.getElementById('g-updates').checked ? 'yes' : 'no');
+  fd.append('timestamp',    new Date().toISOString());
+
+  fetch('/', { method: 'POST', body: fd }).catch(() => {}); // fire & forget
+
+  // Pre-fill feedback form email
+  document.getElementById('fb-email').value = email;
+
+  // Show assessment
+  document.getElementById('gateSection').style.display = 'none';
+  document.getElementById('assessmentWrapper').style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ── RATING ────────────────────────────────────────────────────────
+function setRating(val) {
+  document.getElementById('fb-rating').value = val;
+  document.querySelectorAll('.rating-btn').forEach((b,i) => {
+    b.classList.toggle('active', i+1 <= val);
+  });
+}
+
+// ── FEEDBACK SUBMIT ───────────────────────────────────────────────
+function submitFeedback(e) {
+  e.preventDefault();
+  document.getElementById('fb-timestamp').value = new Date().toISOString();
+
+  const fd = new FormData();
+  fd.append('form-name',       'fsi-assessment-feedback');
+  fd.append('respondent-email', document.getElementById('fb-email').value);
+  fd.append('feedback-type',   document.getElementById('fb-type').value);
+  fd.append('rating',          document.getElementById('fb-rating').value);
+  fd.append('feedback-text',   document.getElementById('fb-text').value);
+  fd.append('feature-request', document.getElementById('fb-feature').value);
+  fd.append('timestamp',       document.getElementById('fb-timestamp').value);
+
+  fetch('/', { method: 'POST', body: fd })
+    .then(() => {
+      document.getElementById('feedbackForm').style.display = 'none';
+      document.getElementById('feedbackSuccess').style.display = 'block';
+    })
+    .catch(() => {
+      document.getElementById('feedbackSuccess').style.display = 'block';
+    });
+}
+
 // ── DATA ──────────────────────────────────────────────────────────
 const UC_DATA = {
   fraud_aml:            { label:'Fraud & AML',             reg:'High',   cx:'High',   base:8.5, m:1.0  },
@@ -1285,4 +1703,17 @@ function runAnalysis() {
 
   document.getElementById('rec-list').innerHTML = recs.map((r,i) => `
     <div class="rec-item">
-      <div class="rec-n">${String(i+1).padStart(2,'0')}</d
+      <div class="rec-n">${String(i+1).padStart(2,'0')}</div>
+      <div class="rec-body-wrap">
+        <div class="rec-title">${r.t}</div>
+        <div class="rec-body">${r.b}</div>
+      </div>
+    </div>
+  `).join('');
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+</script>
+</body>
+</html>
