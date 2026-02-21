@@ -882,13 +882,13 @@
         <a href="index.html#contact" class="cta-primary">Request the Full Memorandum →</a>
         <a href="index.html" class="cta-secondary">Return to Site</a>
       </div>
-      <div class="cta-disclaimer">Quantumleap Insights LLC · insights@quantumleap.llc · Engagements from $25,000</div>
+      <div class="cta-disclaimer">Quantumleap Insights LLC · <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="8de4e3fee4eae5f9fecdfcf8ece3f9f8e0e1e8ecfda3e1e1ee">[email&#160;protected]</a> · Engagements from $25,000</div>
     </div>
   </div>
 
 </div><!-- /main -->
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ── DATA ──────────────────────────────────────────────────────────
 const UC_DATA = {
   fraud_aml:            { label:'Fraud & AML',             reg:'High',   cx:'High',   base:8.5, m:1.0  },
@@ -1102,17 +1102,4 @@ function runAnalysis() {
 
   document.getElementById('rec-list').innerHTML = recs.map((r,i) => `
     <div class="rec-item">
-      <div class="rec-n">${String(i+1).padStart(2,'0')}</div>
-      <div>
-        <div class="rec-title">${r.t}</div>
-        <div class="rec-body">${r.b}</div>
-      </div>
-    </div>
-  `).join('');
-
-  // Update progress to step 3
-  curStep = 3; updateProgress();
-}
-</script>
-</body>
-</html>
+      <div class="rec-n">${String(i+1).padStart(2,'0')}</d
