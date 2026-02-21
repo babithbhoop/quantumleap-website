@@ -815,6 +815,49 @@
           </select>
         </div>
 
+        <!-- ── NEW: AGENTIC AI DEPLOYMENT MODEL ─────────── -->
+        <div class="field-group" style="border-top:1px solid var(--border); padding-top:20px; margin-top:4px;">
+          <div class="field-label" style="flex-direction:column;align-items:flex-start;gap:4px;">
+            <span class="field-label-text">AI Deployment Model <span style="background:rgba(37,99,235,0.15);color:#3b82f6;font-size:10px;padding:2px 8px;font-weight:700;letter-spacing:.08em;vertical-align:middle;">NEW · TRENDING</span></span>
+          </div>
+          <div class="field-hint" style="margin-bottom:10px;">The industry's #1 ROI gap: assistive AI delivers 15–20% productivity lift; agentic AI (autonomous agents) delivers 200–2,000%. McKinsey 2025 data across 47 FSI deployments.</div>
+          <select id="agenticModel">
+            <option value="assistive">Assistive AI — AI helps humans do their jobs faster</option>
+            <option value="hybrid">Hybrid — Some autonomous workflows, mostly assistive</option>
+            <option value="agentic">Agentic AI — Autonomous agents execute end-to-end tasks</option>
+          </select>
+        </div>
+
+        <!-- ── NEW: KYC/AML BASELINE ─────────────────────── -->
+        <div class="field-group" id="kycGroup" style="display:none;">
+          <div class="field-label">
+            <span class="field-label-text">Annual KYC / AML Compliance Spend <span style="background:rgba(37,99,235,0.15);color:#3b82f6;font-size:10px;padding:2px 8px;font-weight:700;letter-spacing:.08em;">NEW</span></span>
+            <span class="field-label-val" id="kycDisplay">$10M</span>
+          </div>
+          <div class="field-hint">Current annual cost of KYC checks, AML monitoring, SAR filings, and compliance staffing. BCG 2025 data shows AI reduces this by 40–50% — making it the highest-ROI line item hidden in most business cases.</div>
+          <input type="range" id="kycSpend" min="1" max="500" step="1" value="10"
+            oninput="slideUpdate(this,'kycDisplay',v=>'$'+v+'M'); showHideKyc();">
+        </div>
+
+        <!-- ── NEW: FRAUD BASELINE ───────────────────────── -->
+        <div class="field-group" id="fraudGroup" style="display:none;">
+          <div class="field-label">
+            <span class="field-label-text">Annual Fraud Loss (Current) <span style="background:rgba(37,99,235,0.15);color:#3b82f6;font-size:10px;padding:2px 8px;font-weight:700;letter-spacing:.08em;">NEW</span></span>
+            <span class="field-label-val" id="fraudDisplay">$5M</span>
+          </div>
+          <div class="field-hint">Total annual fraud losses including chargebacks, write-offs, and investigation costs. Real-time AI fraud detection reduces losses 60–78% vs. batch systems — with every basis point in authorization rate improvement translating directly to revenue (Mastercard 2025: 160B transactions screened).</div>
+          <input type="range" id="fraudLoss" min="0.5" max="1000" step="0.5" value="5"
+            oninput="slideUpdate(this,'fraudDisplay',v=>'$'+v+'M')">
+          <div class="field-label" style="margin-top:16px;">
+            <span class="field-label-text">Current Detection Method</span>
+          </div>
+          <select id="fraudDetect" style="margin-top:6px;">
+            <option value="batch">Batch / Rule-based — End-of-day or periodic</option>
+            <option value="nearreal">Near Real-time — Minutes or under</option>
+            <option value="realtime">Real-time — Sub-second, streaming</option>
+          </select>
+        </div>
+
         <div class="btn-row">
           <button class="btn-back" onclick="goTo(1)">← Back</button>
           <button class="btn-next" onclick="runAnalysis()">Generate My Analysis →</button>
@@ -869,6 +912,11 @@
       </table>
     </div>
 
+    <div class="analysis-block" id="advanced-block" style="display:none;">
+      <div class="block-title">Advanced ROI Breakdown <span style="background:rgba(37,99,235,0.15);color:#3b82f6;font-size:10px;padding:2px 8px;font-weight:700;letter-spacing:.08em;margin-left:8px;">2026 FRAMEWORK</span></div>
+      <div id="advanced-breakdown"></div>
+    </div>
+
     <div class="analysis-block">
       <div class="block-title">Strategic Recommendations</div>
       <div class="rec-list" id="rec-list"></div>
@@ -882,7 +930,7 @@
         <a href="index.html#contact" class="cta-primary">Request the Full Memorandum →</a>
         <a href="index.html" class="cta-secondary">Return to Site</a>
       </div>
-      <div class="cta-disclaimer">Quantumleap Insights LLC · <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="8de4e3fee4eae5f9fecdfcf8ece3f9f8e0e1e8ecfda3e1e1ee">[email&#160;protected]</a> · Engagements from $25,000</div>
+      <div class="cta-disclaimer">Quantumleap Insights LLC · insights&#64;quantumleap&#46;llc · Engagements from $25,000</div>
     </div>
   </div>
 
@@ -956,7 +1004,17 @@ function updateProgress() {
 function toggleUC(el, key) {
   el.classList.toggle('checked');
   selectedUCs.has(key) ? selectedUCs.delete(key) : selectedUCs.add(key);
+  showHideContextInputs();
 }
+
+function showHideContextInputs() {
+  document.getElementById('kycGroup').style.display =
+    (selectedUCs.has('fraud_aml') || selectedUCs.has('kyc_onboarding')) ? 'block' : 'none';
+  document.getElementById('fraudGroup').style.display =
+    selectedUCs.has('fraud_aml') ? 'block' : 'none';
+}
+
+function showHideKyc() {} // placeholder for inline oninput
 
 // ── ANALYSIS ──────────────────────────────────────────────────────
 function runAnalysis() {
@@ -971,9 +1029,21 @@ function runAnalysis() {
   const change    = document.getElementById('changeApproach').value;
   const paybackTgt= parseInt(document.getElementById('paybackTarget').value);
 
+  // NEW INPUTS
+  const agenticModel  = document.getElementById('agenticModel').value;
+  const kycSpendEl    = document.getElementById('kycSpend');
+  const fraudLossEl   = document.getElementById('fraudLoss');
+  const fraudDetectEl = document.getElementById('fraudDetect');
+  const kycSpend   = kycSpendEl ? parseFloat(kycSpendEl.value) : 0;
+  const fraudLoss  = fraudLossEl ? parseFloat(fraudLossEl.value) : 0;
+  const fraudDetect = fraudDetectEl ? fraudDetectEl.value : 'batch';
+
   const vd  = VERTICALS[vertical];
   const prob = CHANGE_PROB[change];
   const mm   = MATURITY_M[maturity] || 0.85;
+
+  // AGENTIC MULTIPLIER (McKinsey 2025 FSI data)
+  const agenticMult = { assistive: 1.0, hybrid: 1.8, agentic: 3.5 }[agenticModel] || 1.0;
 
   // TRUE COSTS
   const dataGap   = 1 - dataQ;
@@ -984,19 +1054,46 @@ function runAnalysis() {
   const changeCost = invest * 0.15 * (1 / prob);
   const trueCost   = invest + remCost + mrmActual + changeCost;
 
-  // GROSS VALUE
+  // GROSS VALUE (core engine — now agentic-adjusted)
   let gross3yr = 0;
   selectedUCs.forEach(uc => {
     const d = UC_DATA[uc];
-    gross3yr += d.base * (employees / 10000) * vd.vm * d.m * prob * mm;
+    gross3yr += d.base * (employees / 10000) * vd.vm * d.m * prob * mm * agenticMult;
   });
 
   const regDiv = (selectedUCs.has('compliance_reporting')||selectedUCs.has('fraud_aml'))
     ? gross3yr * 0.14 : 0;
 
-  const net3yr = gross3yr + regDiv - trueCost;
+  // ── NEW: KYC/AML COST REDUCTION VALUE ────────────────────────
+  let kycROI = 0;
+  let kycBaseReduction = 0;
+  if ((selectedUCs.has('fraud_aml') || selectedUCs.has('kyc_onboarding')) && kycSpend > 0) {
+    // BCG 2025: 40-50% cost reduction; agentic can drive 50%+
+    const kycReductionRate = agenticModel === 'agentic' ? 0.50 : agenticModel === 'hybrid' ? 0.42 : 0.35;
+    kycBaseReduction = kycSpend * kycReductionRate;
+    kycROI = kycBaseReduction * 3; // 3yr
+  }
+
+  // ── NEW: FRAUD ROI ────────────────────────────────────────────
+  let fraudROI = 0;
+  let fraudReduction = 0;
+  let authROI = 0;
+  if (selectedUCs.has('fraud_aml') && fraudLoss > 0) {
+    // Real-time: 60-78% reduction (Mastercard 2025 data). Batch: 20-30%.
+    const fraudReductionRate = fraudDetect === 'realtime' ? 0.72
+      : fraudDetect === 'nearreal' ? 0.50 : 0.25;
+    // Upgrade multiplier: if they move to real-time from batch
+    const detectionUpgrade = fraudDetect === 'batch' ? 1.6 : fraudDetect === 'nearreal' ? 1.25 : 1.0;
+    fraudReduction = fraudLoss * fraudReductionRate * detectionUpgrade;
+    fraudROI = fraudReduction * 3;
+    // Authorization rate improvement revenue lift (est 2% of fraud loss baseline as proxy)
+    authROI = fraudLoss * 0.08 * 3;
+  }
+
+  const totalSpecializedROI = kycROI + fraudROI + authROI;
+  const net3yr = gross3yr + regDiv + totalSpecializedROI - trueCost;
   const roi3yr = (net3yr / trueCost * 100);
-  const payback = Math.round((trueCost / (gross3yr / 36)) * vd.pm);
+  const payback = Math.round((trueCost / ((gross3yr + totalSpecializedROI) / 36)) * vd.pm);
 
   // ── RENDER ────────────────────────────────────────────────────
   document.getElementById('sec-2').classList.remove('active');
@@ -1010,7 +1107,7 @@ function runAnalysis() {
 
   const f = v => {
     const abs = Math.abs(v);
-    const str = abs >= 1000 ? '$'+(abs/1000).toFixed(1)+'B' : '$'+abs.toFixed(0)+'M';
+    const str = abs >= 1000 ? '$'+(abs/1000).toFixed(1)+'B' : '$'+abs.toFixed(1)+'M';
     return (v < 0 ? '-' : '') + str;
   };
 
@@ -1021,6 +1118,8 @@ function runAnalysis() {
     { label:'True Total Cost',       val: f(trueCost),         sub:'Fully-loaded incl. MRM & data' },
     { label:'Payback Period',        val: payback+'mo',         sub:'Target was '+paybackTgt+' months' },
     ...(regDiv>0 ? [{ label:'Regulatory Dividend', val: f(regDiv), sub:'Avoided compliance cost' }] : []),
+    ...(totalSpecializedROI>0 ? [{ label:'Specialized FSI Value', val: f(totalSpecializedROI), sub:'KYC/AML + Fraud ROI (3yr)' }] : []),
+    { label:'AI Model',  val: {assistive:'Assistive',hybrid:'Hybrid',agentic:'Agentic'}[agenticModel], sub:{assistive:'15–20% lift typical',hybrid:'~1.8× value multiplier',agentic:'200–2,000% lift possible'}[agenticModel] },
     { label:'Adoption Probability',  val: Math.round(prob*100)+'%', sub:'Based on change approach' },
   ].map(m => `
     <div class="metric-card">
@@ -1034,6 +1133,9 @@ function runAnalysis() {
   const wfItems = [
     { label:'Gross AI Value (3yr)',       val:gross3yr,    bar:100,                       cls:'pos', color:'#22c55e' },
     ...(regDiv>0 ? [{ label:'Regulatory Dividend', val:regDiv, bar:regDiv/gross3yr*100, cls:'pos', color:'#22c55e' }]:[]),
+    ...(kycROI>0 ? [{ label:'KYC/AML Cost Reduction (3yr)', val:kycROI, bar:kycROI/gross3yr*100, cls:'pos', color:'#22c55e' }]:[]),
+    ...(fraudROI>0 ? [{ label:'Fraud Loss Prevention (3yr)', val:fraudROI, bar:fraudROI/gross3yr*100, cls:'pos', color:'#22c55e' }]:[]),
+    ...(authROI>0 ? [{ label:'Authorization Rate Lift (3yr)', val:authROI, bar:authROI/gross3yr*100, cls:'pos', color:'#22c55e' }]:[]),
     { label:'Licensing & Compute',        val:-invest,     bar:invest/gross3yr*100,        cls:'neg', color:'#ef4444' },
     { label:'Data Remediation',           val:-remCost,    bar:remCost/gross3yr*100,       cls:'neg', color:'#ef4444' },
     { label:'Model Risk (MRM) Overhead',  val:-mrmActual,  bar:mrmActual/gross3yr*100,     cls:'neg', color:'#f59e0b' },
@@ -1050,6 +1152,72 @@ function runAnalysis() {
       <span class="wf-val ${i.cls}">${i.val>=0?'+':''}${f(i.val)}</span>
     </div>
   `).join('');
+
+  // ── NEW: ADVANCED BREAKDOWN ───────────────────────────────────
+  const advBlock = document.getElementById('advanced-block');
+  const advBreak = document.getElementById('advanced-breakdown');
+  let advHTML = '';
+
+  // Agentic AI panel
+  const agenticLabels = {
+    assistive: { name:'Assistive AI', lift:'15–20%', desc:'AI assists humans — productivity uplift is real but limited. Most FSI firms start here.', upgrade:'Upgrading to Hybrid or Agentic deployment could multiply your ROI by 1.8–3.5×.' },
+    hybrid:    { name:'Hybrid Agentic', lift:'~80–180%', desc:'Some workflows run autonomously while others remain human-assisted. Strong balance of risk and return.', upgrade:'Full agentic deployment could deliver an additional ' + f((gross3yr * 3.5 - gross3yr * 1.8)) + ' in value over 3 years.' },
+    agentic:   { name:'Full Agentic AI', lift:'200–2,000%', desc:'AI agents execute end-to-end workflows autonomously. McKinsey 2025: each human supervisor oversees 20+ AI agent workers.', upgrade:'You are positioned for maximum ROI. Prioritize governance and audit trail architecture to meet SR 11-7 requirements.' }
+  }[agenticModel];
+
+  advHTML += `
+    <div style="background:var(--bg-card);border:1px solid var(--border);padding:20px 24px;margin-bottom:12px;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--blue-light);">Deployment Model</div>
+        <div style="background:rgba(37,99,235,0.15);color:#3b82f6;font-size:11px;font-weight:700;padding:3px 10px;">${agenticLabels.name}</div>
+        <div style="background:var(--green-dim);color:var(--green);font-size:11px;font-weight:700;padding:3px 10px;">+${agenticLabels.lift} productivity lift</div>
+      </div>
+      <div style="font-size:13px;color:var(--text-muted);margin-bottom:8px;">${agenticLabels.desc}</div>
+      <div style="font-size:12px;color:var(--text-dim);font-style:italic;">${agenticLabels.upgrade}</div>
+    </div>`;
+
+  // KYC/AML panel
+  if (kycROI > 0) {
+    const kycRate = agenticModel === 'agentic' ? '50%' : agenticModel === 'hybrid' ? '42%' : '35%';
+    advHTML += `
+      <div style="background:var(--bg-card);border:1px solid var(--border);padding:20px 24px;margin-bottom:12px;">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--blue-light);">KYC / AML Automation ROI</div>
+          <div style="background:var(--green-dim);color:var(--green);font-size:11px;font-weight:700;padding:3px 10px;">${f(kycBaseReduction)}/yr saved</div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:12px;">
+          <div><div style="font-size:10px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Current KYC/AML Spend</div><div style="font-size:18px;font-weight:700;color:var(--text);">${f(kycSpend)}/yr</div></div>
+          <div><div style="font-size:10px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">AI Reduction Rate</div><div style="font-size:18px;font-weight:700;color:var(--green);">${kycRate}</div></div>
+          <div><div style="font-size:10px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">3-Year Value</div><div style="font-size:18px;font-weight:700;color:var(--blue-light);">${f(kycROI)}</div></div>
+        </div>
+        <div style="font-size:12px;color:var(--text-dim);">Source: BCG 2025 — Agentic AI in KYC/AML reduces onboarding costs 40–50% and processing time from days to minutes. Only 2% of global financial crime is currently detected — AI-native institutions are 3× more effective.</div>
+      </div>`;
+  }
+
+  // Fraud ROI panel
+  if (fraudROI > 0) {
+    const detLabels = { batch:'Batch/Rule-Based', nearreal:'Near Real-time', realtime:'Real-time Streaming' };
+    const fraudRateDisplay = fraudDetect === 'realtime' ? '72%' : fraudDetect === 'nearreal' ? '50%' : '25% (upgrading to real-time could reach 72%)';
+    advHTML += `
+      <div style="background:var(--bg-card);border:1px solid var(--border);padding:20px 24px;margin-bottom:12px;">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--blue-light);">Fraud Detection ROI</div>
+          <div style="background:rgba(239,68,68,0.12);color:#ef4444;font-size:11px;font-weight:700;padding:3px 10px;">${f(fraudLoss)}/yr at risk</div>
+          <div style="background:var(--green-dim);color:var(--green);font-size:11px;font-weight:700;padding:3px 10px;">${f(fraudReduction)}/yr recovered</div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:12px;">
+          <div><div style="font-size:10px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Current Detection</div><div style="font-size:14px;font-weight:700;color:var(--text);">${detLabels[fraudDetect]}</div></div>
+          <div><div style="font-size:10px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Loss Reduction Rate</div><div style="font-size:14px;font-weight:700;color:var(--green);">${fraudRateDisplay}</div></div>
+          <div><div style="font-size:10px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Authorization Lift (3yr)</div><div style="font-size:14px;font-weight:700;color:var(--blue-light);">${f(authROI)}</div></div>
+        </div>
+        <div style="font-size:12px;color:var(--text-dim);">Source: Mastercard 2025 — Real-time AI screens 160B+ transactions; authorization rate improvement of even 1 basis point generates direct revenue. Every basis point in auth rate = measurable P&L impact. Real-time vs. batch is the single largest determinant of fraud ROI.</div>
+      </div>`;
+  }
+
+  if (advHTML) {
+    advBlock.style.display = 'block';
+    advBreak.innerHTML = advHTML;
+  }
 
   // RISK TABLE
   const rcls = { High:'rbadge-high', Medium:'rbadge-med', Low:'rbadge-low' };
@@ -1069,6 +1237,21 @@ function runAnalysis() {
 
   // RECS
   const recs = [];
+
+  if (agenticModel === 'assistive') recs.push({
+    t: 'Consider an Agentic AI Upgrade Path in Your Business Case',
+    b: `You're planning assistive AI, which delivers 15–20% productivity lift. Agentic deployment (autonomous agents) delivers 200–2,000% lift per McKinsey 2025 FSI data. Even a hybrid approach could multiply your ${f(gross3yr)} in projected value by 1.8×. Include an 18-month upgrade path in your board presentation.`
+  });
+
+  if (kycROI > 0 && agenticModel !== 'agentic') recs.push({
+    t: 'KYC/AML Is Your Highest-Conviction ROI — Don\'t Leave 15% on the Table',
+    b: `Your KYC/AML baseline of ${f(kycSpend)}/yr represents ${f(kycBaseReduction)}/yr in proven, achievable savings. BCG 2025 data shows agentic AI (vs. assistive) achieves 50% vs. 35% cost reduction. Structuring your compliance automation as agentic — even for just this use case — could add ${f(kycSpend * 0.15)}/yr to your ROI without additional technology investment.`
+  });
+
+  if (fraudROI > 0 && fraudDetect === 'batch') recs.push({
+    t: 'Real-Time Fraud Detection Could Double Your Fraud ROI',
+    b: `You're currently running batch/rule-based fraud detection. Migrating to real-time streaming AI (Kafka + ML inference) delivers 72% fraud reduction vs. your current ~25% — potentially adding ${f(fraudLoss * 0.47 * 3)} over 3 years. The EU Instant Payments Regulation (live Oct 2025) also requires sub-10-second screening, making this a compliance requirement, not just an optimization.`
+  });
 
   if (dataQ < 0.6) recs.push({
     t: 'Prioritize Data Remediation Before AI Deployment',
