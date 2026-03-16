@@ -996,6 +996,70 @@ spawnComet(); // immediate first comet
 setTimeout(spawnComet, 2200);
 setInterval(spawnComet, 5500+Math.random()*4000);
 
+// ── MILKY WAY — galactic band of stardust ──
+// Dense star field along a diagonal band + galactic core glow
+const MW_STARS = [];
+const MW_ANGLE = -0.38; // radians — diagonal tilt of the band
+const MW_CX = 0.5, MW_CY = 0.42; // galactic core center (normalized)
+for (let i = 0; i < 1800; i++) {
+  // Position along the band: scatter perpendicular to angle
+  const along   = Math.random();           // 0-1 along the band
+  const perp    = (Math.random()-0.5) * (0.12 + Math.random()*0.14); // band width + fuzz
+  const bx = along - 0.5;
+  const by = perp;
+  // Rotate by band angle
+  const rx = bx*Math.cos(MW_ANGLE) - by*Math.sin(MW_ANGLE) + MW_CX;
+  const ry = bx*Math.sin(MW_ANGLE) + by*Math.cos(MW_ANGLE) + MW_CY;
+  // Density: brighter near center of band
+  const bandDist = Math.abs(perp) / 0.13;
+  const brightness = Math.max(0, 1 - bandDist*bandDist);
+  // Color: warm white near core, cooler blue at edges
+  const warm = brightness > 0.7 ? `255,248,${220+Math.floor(Math.random()*35)}` : `200,215,255`;
+  MW_STARS.push({
+    x: rx, y: ry,
+    r: 0.3 + Math.random()*0.7,
+    alpha: brightness * (0.15 + Math.random()*0.35),
+    tw: Math.random()*Math.PI*2,
+    color: warm
+  });
+}
+
+// ── SKYNET — hostile AI surveillance network ──
+const SN_NODE_COUNT = 18;
+const snNodes = [];
+for (let i = 0; i < SN_NODE_COUNT; i++) {
+  snNodes.push({
+    x: 0.05 + Math.random()*0.9,
+    y: 0.05 + Math.random()*0.9,
+    vx: (Math.random()-0.5)*0.00025,
+    vy: (Math.random()-0.5)*0.00025,
+    r: 2.5 + Math.random()*2,
+    pulse: Math.random()*Math.PI*2,
+    // Some nodes are "active" (bright red), some "dormant" (dim)
+    active: Math.random() > 0.45,
+    activationT: Math.random()*Math.PI*2
+  });
+}
+// Scanning beams — rotating red laser sweeps
+const snScans = [
+  { cx:0.2, cy:0.25, angle:0, speed:0.004, len:0.28, alpha:0.18 },
+  { cx:0.78,cy:0.6,  angle:2.1, speed:-0.003, len:0.32, alpha:0.14 },
+  { cx:0.5, cy:0.82, angle:1.0, speed:0.005, len:0.22, alpha:0.16 },
+];
+// Target reticles — occasional lock-on circles
+const snReticles = [];
+function spawnReticle() {
+  const ni = Math.floor(Math.random()*SN_NODE_COUNT);
+  snReticles.push({
+    x: snNodes[ni].x, y: snNodes[ni].y,
+    r: 0.06, targetR: 0.018,
+    alpha: 0, phase: 'in', t: 0,
+    life: 180
+  });
+}
+spawnReticle();
+setInterval(spawnReticle, 4500 + Math.random()*3000);
+
 // Data packets
 const packets = [];
 for (let i=0; i<10; i++) {
@@ -1048,6 +1112,40 @@ function frame() {
     ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
   });
 
+  // ── MILKY WAY BAND ──
+  // 1. Galactic core: warm golden-white bloom at center
+  const coreX = MW_CX*W + mouse.x*6, coreY = MW_CY*H + mouse.y*4;
+  const coreG = ctx.createRadialGradient(coreX, coreY, 0, coreX, coreY, W*0.22);
+  coreG.addColorStop(0,  'rgba(255,245,200,0.09)');
+  coreG.addColorStop(0.3,'rgba(255,220,150,0.05)');
+  coreG.addColorStop(0.7,'rgba(180,160,255,0.03)');
+  coreG.addColorStop(1,  'rgba(100,120,255,0)');
+  ctx.fillStyle = coreG; ctx.fillRect(0,0,W,H);
+
+  // 2. Band dust glow — soft elongated haze along the band
+  ctx.save();
+  ctx.translate(MW_CX*W + mouse.x*5, MW_CY*H + mouse.y*3);
+  ctx.rotate(MW_ANGLE);
+  const bandG = ctx.createRadialGradient(0, 0, 0, 0, 0, W*0.5);
+  bandG.addColorStop(0,   'rgba(200,210,255,0.055)');
+  bandG.addColorStop(0.35,'rgba(180,195,255,0.028)');
+  bandG.addColorStop(1,   'rgba(100,120,255,0)');
+  ctx.scale(2.2, 0.28);  // stretch wide, compress thin → band shape
+  ctx.fillStyle = bandG;
+  ctx.beginPath(); ctx.arc(0, 0, W*0.5, 0, Math.PI*2); ctx.fill();
+  ctx.restore();
+
+  // 3. Individual Milky Way dust stars
+  MW_STARS.forEach(s => {
+    s.tw += 0.012;
+    const a = s.alpha * (0.7 + 0.3*Math.sin(s.tw));
+    const sx = s.x*W + mouse.x*3, sy = s.y*H + mouse.y*2;
+    ctx.save(); ctx.globalAlpha = a;
+    ctx.fillStyle = `rgb(${s.color})`;
+    ctx.beginPath(); ctx.arc(sx, sy, s.r, 0, Math.PI*2); ctx.fill();
+    ctx.restore();
+  });
+
   // grid
   drawGrid();
 
@@ -1071,6 +1169,103 @@ function frame() {
     }
     ctx.restore();
   });
+
+  // ── SKYNET NETWORK ──
+  // 1. Red surveillance edges between close nodes
+  snNodes.forEach((a,i) => {
+    for (let j=i+1; j<SN_NODE_COUNT; j++) {
+      const b = snNodes[j];
+      const dx=(a.x-b.x)*W, dy=(a.y-b.y)*H;
+      const dist=Math.sqrt(dx*dx+dy*dy);
+      if (dist < 200) {
+        const edgeAlpha = (1-dist/200)*0.18*(0.4+0.6*Math.sin(T*0.9+i*1.1));
+        ctx.save(); ctx.globalAlpha=edgeAlpha;
+        ctx.strokeStyle='#ef4444'; ctx.lineWidth=0.6;
+        // Dashed hostile grid lines
+        ctx.setLineDash([4,8]);
+        ctx.beginPath(); ctx.moveTo(a.x*W,a.y*H); ctx.lineTo(b.x*W,b.y*H); ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.restore();
+      }
+    }
+  });
+
+  // 2. Scanning beams
+  snScans.forEach(sc => {
+    sc.angle += sc.speed;
+    const sx=sc.cx*W+mouse.x*5, sy=sc.cy*H+mouse.y*4;
+    const ex=sx+Math.cos(sc.angle)*sc.len*W;
+    const ey=sy+Math.sin(sc.angle)*sc.len*W;
+    const beam = ctx.createLinearGradient(sx,sy,ex,ey);
+    beam.addColorStop(0, `rgba(239,68,68,${sc.alpha*1.2})`);
+    beam.addColorStop(0.6,`rgba(239,68,68,${sc.alpha*0.4})`);
+    beam.addColorStop(1,  'rgba(239,68,68,0)');
+    ctx.save(); ctx.globalAlpha=0.85; ctx.strokeStyle=beam; ctx.lineWidth=1.5;
+    ctx.beginPath(); ctx.moveTo(sx,sy); ctx.lineTo(ex,ey); ctx.stroke();
+    // Sweep arc ghost
+    ctx.globalAlpha=0.06; ctx.fillStyle='rgba(239,68,68,1)';
+    ctx.beginPath();
+    ctx.moveTo(sx,sy);
+    ctx.arc(sx,sy,sc.len*W,sc.angle-0.18,sc.angle);
+    ctx.closePath(); ctx.fill();
+    ctx.restore();
+  });
+
+  // 3. Skynet nodes — red pulsing surveillance points
+  snNodes.forEach(n => {
+    n.x += n.vx; n.y += n.vy;
+    if(n.x<0.03||n.x>0.97) n.vx*=-1;
+    if(n.y<0.03||n.y>0.97) n.vy*=-1;
+    n.pulse += 0.035;
+    n.activationT += 0.018;
+    const isActive = n.active && Math.sin(n.activationT) > -0.3;
+    const nodeAlpha = isActive ? 0.7+0.3*Math.sin(n.pulse) : 0.18+0.1*Math.sin(n.pulse);
+    const r = n.r*(0.8+0.2*Math.sin(n.pulse));
+    const nx=n.x*W, ny=n.y*H;
+    // Glow
+    const ng=ctx.createRadialGradient(nx,ny,0,nx,ny,r*9);
+    ng.addColorStop(0,`rgba(239,68,68,${nodeAlpha*0.5})`);
+    ng.addColorStop(1,'rgba(239,68,68,0)');
+    ctx.fillStyle=ng; ctx.beginPath(); ctx.arc(nx,ny,r*9,0,Math.PI*2); ctx.fill();
+    // Core
+    ctx.fillStyle=isActive ? '#fca5a5' : '#7f1d1d';
+    ctx.globalAlpha=nodeAlpha;
+    ctx.beginPath(); ctx.arc(nx,ny,r,0,Math.PI*2); ctx.fill();
+    // Outer ring on active nodes
+    if(isActive) {
+      ctx.strokeStyle='#ef4444'; ctx.lineWidth=0.8;
+      ctx.globalAlpha=nodeAlpha*0.5;
+      ctx.beginPath(); ctx.arc(nx,ny,r*3,0,Math.PI*2); ctx.stroke();
+    }
+    ctx.globalAlpha=1;
+  });
+
+  // 4. Target reticles (lock-on circles)
+  for(let i=snReticles.length-1; i>=0; i--) {
+    const rt=snReticles[i]; rt.t++;
+    if(rt.phase==='in')  { rt.alpha=Math.min(0.8,rt.t/20); rt.r-=(rt.r-rt.targetR)*0.06; if(rt.t>20) rt.phase='hold'; }
+    if(rt.phase==='hold'){ if(rt.t>rt.life*0.7) rt.phase='out'; }
+    if(rt.phase==='out') { rt.alpha=Math.max(0,rt.alpha-0.025); }
+    if(rt.alpha<=0||rt.t>rt.life){snReticles.splice(i,1);continue;}
+    const rx=rt.x*W, ry=rt.y*H, rr=rt.r*W;
+    ctx.save(); ctx.globalAlpha=rt.alpha; ctx.strokeStyle='#ef4444'; ctx.lineWidth=1;
+    // Main circle
+    ctx.beginPath(); ctx.arc(rx,ry,rr,0,Math.PI*2); ctx.stroke();
+    // Crosshair ticks
+    const tick=rr*0.35;
+    ctx.lineWidth=0.8;
+    [[0,-1],[0,1],[-1,0],[1,0]].forEach(([dx,dy])=>{
+      ctx.beginPath();
+      ctx.moveTo(rx+dx*(rr+tick*0.2), ry+dy*(rr+tick*0.2));
+      ctx.lineTo(rx+dx*(rr+tick),     ry+dy*(rr+tick));
+      ctx.stroke();
+    });
+    // Inner dot
+    ctx.fillStyle='#ef4444'; ctx.globalAlpha=rt.alpha*0.6;
+    ctx.beginPath(); ctx.arc(rx,ry,2,0,Math.PI*2); ctx.fill();
+    ctx.restore();
+  }
+
 
   // shooting stars (fast thin streaks)
   for (let i=shoots.length-1;i>=0;i--) {
